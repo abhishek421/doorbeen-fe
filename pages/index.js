@@ -1,6 +1,7 @@
 import Head from 'next/head'
 import Image from 'next/image'
 import Link from 'next/link'
+import { useEffect, useState } from 'react'
 import { Carousel } from 'react-responsive-carousel'
 import logo from '../Assets/logo.png'
 import Navbar from '../components/Navbar'
@@ -9,8 +10,26 @@ import ProductCard from '../components/ProductCard'
 import SearchBar from '../components/SearchBar'
 import ShopCard from '../components/ShopCard'
 import Slider from '../components/Slider'
+import { db } from '../firebase'
 
 function Home() {
+  const [shops, setShops] = useState([])
+
+  async function getData() {
+    await db.ref(`shops/`).on('value', (snapshot) => {
+      if (snapshot.exists()) {
+        var data = Object.values(snapshot.val())
+        setShops(data)
+      } else {
+        console.log('No data found')
+      }
+    })
+  }
+
+  useEffect(() => {
+    getData()
+  }, [])
+
   return (
     <div className="flex min-h-screen w-full flex-col bg-slate-200 px-4 pb-10 pt-2">
       <Head>
@@ -29,12 +48,12 @@ function Home() {
       <SearchBar />
       <Slider />
       <p className="text-lg font-semibold">Top Offers around your area</p>
-      <ShopCard />
       <Carousel
         className="w-full"
         infiniteLoop
         showStatus={false}
         showIndicators={false}
+        showThumbs={false}
       >
         <div className="flex flex-row justify-evenly">
           <OfferCard />
@@ -49,9 +68,14 @@ function Home() {
           <OfferCard />
         </div>
       </Carousel>
-      <div className="mb-10">
+      {/* <div className="mb-10">
         <ProductCard />
         <ProductCard />
+      </div> */}
+      <div className="flex flex-col items-center gap-4">
+        {shops.map((data) => (
+          <ShopCard data={data} />
+        ))}
       </div>
       <Navbar />
     </div>
