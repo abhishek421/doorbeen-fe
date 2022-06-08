@@ -36,7 +36,7 @@ function Home() {
         <title>Doorbeen</title>
         <link rel="icon" href="/logo-c-w.png" />
       </Head>
-      <div className="flex flex-row items-center justify-between">
+      <div className="flex flex-row mb-4 items-center justify-between">
         <Image src={logo} objectFit="contain" width={'100'} height="50" />
         <Link href={'/profile'}>
           <img
@@ -45,7 +45,7 @@ function Home() {
           />
         </Link>
       </div>
-      <SearchBar />
+      {/* <SearchBar /> */}
       <Slider />
       <p className="text-lg font-semibold">Top Offers around your area</p>
       <Carousel
