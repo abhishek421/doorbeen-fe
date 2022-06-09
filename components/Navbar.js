@@ -19,9 +19,9 @@ export default function Navbar() {
       <Link href={'/wishlist'}>
       <FaRegListAlt />
       </Link>
-      <Link href={'/messages'}>
+      {/* <Link href={'/messages'}>
       <FaRegCommentAlt />
-      </Link>
+      </Link> */}
       <Link href={'/settings'}>
       <FaRegSun />
       </Link>

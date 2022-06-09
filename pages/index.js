@@ -1,8 +1,9 @@
 import Head from 'next/head'
 import Image from 'next/image'
 import Link from 'next/link'
-import { useEffect, useState } from 'react'
+import { useContext, useEffect, useState } from 'react'
 import { Carousel } from 'react-responsive-carousel'
+import AppContext from '../AppContext'
 import logo from '../Assets/logo.png'
 import Navbar from '../components/Navbar'
 import OfferCard from '../components/OfferCard'
@@ -14,7 +15,8 @@ import { db } from '../firebase'
 
 function Home() {
   const [shops, setShops] = useState([])
-
+  const context = useContext(AppContext)
+  const user = context.state.user
   async function getData() {
     await db.ref(`shops/`).on('value', (snapshot) => {
       if (snapshot.exists()) {
@@ -38,9 +40,9 @@ function Home() {
       </Head>
       <div className="flex flex-row mb-4 items-center justify-between">
         <Image src={logo} objectFit="contain" width={'100'} height="50" />
-        <Link href={'/profile'}>
+        <Link href={user?`/profile`:`/auth/signin`}>
           <img
-            src="https://imgflip.com/s/meme/Smiling-Cat.jpg"
+            src={user?user.userImg:"https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460__340.png"}
             className="h-10 w-10 rounded-full shadow-lg"
           />
         </Link>

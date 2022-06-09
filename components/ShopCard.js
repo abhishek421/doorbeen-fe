@@ -1,9 +1,10 @@
 import { FaMapPin, FaPhone, FaRegCommentAlt, FaWhatsapp } from 'react-icons/fa'
 import { IoMdCall } from 'react-icons/io'
-import gbro from '../Assets/gbro.png'
+import Link from 'next/link'
 
 export default function ShopCard(props) {
   return (
+      <Link href={`/shop/${props?.data.shopId}`}>
     <div className="mb-4 flex h-40 w-full flex-row gap-4 rounded-lg bg-white p-4 shadow-lg">
       <img
         className="h-32 w-32  rounded-lg object-contain ring ring-slate-400"
@@ -35,5 +36,6 @@ export default function ShopCard(props) {
         </div>
       </div>
     </div>
-  )
+    </Link>
+    )
 }
